@@ -1,0 +1,89 @@
+#!/usr/bin/ansible-playbook
+---
+#
+#      Copyright (c) 2020 World Wide Technology, LLC
+#      All rights reserved.
+#
+#      Author: joel.king@wwt.com
+#
+#      Usage: ./install_docker.yml --private-key=~/amazon_web_service/csr1000v/aws_csr1000v.pem --user ubuntu
+#
+#
+#      This playbook installs Docker on a ubuntu instance in AWS to create a learning environment for the WWT
+#      DevNet certification study group topic "Using a SDK"
+#
+#      References: https://galaxy.ansible.com/crivetimihai/virtualization
+#
+#      Sample Inventory file
+#
+#        Use_a_SDK:
+#          hosts:
+#            ec2-3-85-88-62.compute-1.amazonaws.com: {}
+#          vars:
+#            ansible_python_interpreter: /usr/bin/python3
+#
+#
+#
+- name: Install Docker CE on Ubuntu
+  hosts: Use_a_SDK
+  gather_facts: no
+
+  vars:
+
+    debian_prereq_packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+
+    debian_docker_packages:
+      - docker-ce
+      - docker-ce-cli
+
+  tasks:
+
+    - name: Uninstall old versions
+      apt:
+        name: >-
+            docker, docker-engine, docker.io,
+            containerd, runc
+        state: absent
+      become: yes
+
+    #
+    #   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    #
+    - name: add Docker apt signing key
+      apt_key:
+        url: "{{ item }}"
+        state: present
+      with_items:
+        - https://download.docker.com/linux/debian/gpg
+      become: yes
+
+    #
+    #   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    #
+    - name: setup Docker apt repository on Debian
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+        state: present
+      become: yes
+
+    - name: Install packages to allow apt to use a repository over HTTPS
+      apt:
+        update_cache: yes
+        name: "{{ debian_prereq_packages }}"
+        state: present
+      become: yes
+
+    #
+    #  sudo apt-get -y install docker-ce
+    #
+    - name: Install Docker-CE
+      apt:
+        update_cache: yes
+        name: "{{ debian_docker_packages }}"
+        state: present
+      become: yes
