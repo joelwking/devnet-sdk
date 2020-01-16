@@ -1,0 +1,8 @@
+---
+    all:
+      children:
+        Use_a_SDK:
+          hosts:
+            ec2-3-85-88-62.compute-1.amazonaws.com: {}
+          vars:
+            ansible_python_interpreter: /usr/bin/python3

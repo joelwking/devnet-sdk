@@ -8,7 +8,6 @@
 #
 #      Usage: ./install_docker.yml --private-key=~/amazon_web_service/csr1000v/aws_csr1000v.pem --user ubuntu
 #
-#
 #      This playbook installs Docker on a ubuntu instance in AWS to create a learning environment for the WWT
 #      DevNet certification study group topic "Using a SDK"
 #
@@ -21,8 +20,6 @@
 #            ec2-3-85-88-62.compute-1.amazonaws.com: {}
 #          vars:
 #            ansible_python_interpreter: /usr/bin/python3
-#
-#
 #
 - name: Install Docker CE on Ubuntu
   hosts: Use_a_SDK
@@ -86,4 +83,11 @@
         update_cache: yes
         name: "{{ debian_docker_packages }}"
         state: present
+      become: yes
+
+    #
+    #  sudo usermod -aG docker $USER
+    #
+    - name: Add the user to the Docker group (eliminate the need to run sudo)
+      shell: "usermod -aG docker {{ ansible_ssh_user }}"
       become: yes
