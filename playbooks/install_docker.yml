@@ -6,7 +6,7 @@
 #
 #      Author: joel.king@wwt.com
 #
-#      Usage: ./install_docker.yml --private-key=~/amazon_web_service/csr1000v/aws_csr1000v.pem --user ubuntu
+#      Usage: ./install_docker.yml --private-key=~/amazon_web_service/sdk/devnet_sdk_demo.pem --user ubuntu
 #
 #      This playbook installs Docker on a ubuntu instance in AWS to create a learning environment for the WWT
 #      DevNet certification study group topic "Using a SDK"

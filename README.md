@@ -1,10 +1,10 @@
 # devnet-sdk
-World Wide Technology, DevNet Study Group session, 21 January 2020, **Using a SDK**
+World Wide Technology, DevNet Study Group session, 21 January 2020, **Using a SDK**.
 
 ## Overview
 The engineers at World Wide Technology have formed a DevNet study group. This repository is the foundation for the DevNet certification exam study group on the topic of Software Development Kit (SDKs).  This collateral is used for exam preparation the Cisco DevNet Associate certification.
 
-This repository provides instructions, sample Ansible playbooks, a Dockerfile, and sample Juypter notebooks to create a learning environment on using the Meraki SDK. 
+This repository provides instructions, a sample Ansible playbook, a Dockerfile, and sample Jupyter notebooks to create a learning environment on using the Meraki SDK. 
 
 ## Presentation
 
@@ -40,7 +40,7 @@ devnet-sdk/
 ```
 
 ## Cultural Aside
-In addition to using the environment for learning how to use the Meraki SDK, Cloud computing instances running Docker and Jupyter notebooks is common for big data analytics and machine learning. Do a web search on "why ai/ml use docker and jupyter notebooks" - you will find a number of references to this combination of tools for AI/ML projects.
+In addition to using the environment for learning how to use the Meraki SDK, Cloud computing instances running Docker and Jupyter notebooks are common for big data analytics and machine learning. Do a web search on *"why ai/ml use docker and jupyter notebooks"* - you will find a number of references to this combination of tools for AI/ML projects.
 
 ## Author
 joel.king@wwt.com (@joelwking)

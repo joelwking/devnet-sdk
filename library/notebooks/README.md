@@ -8,7 +8,6 @@ Log on your assigned account on the EC2 instance.
 ```bash
 ssh -i "~/amazon_web_service/sdk/devnet_sdk_demo.pem" ubuntu@ec2-54-208-198-12.compute-1.amazonaws.com
 ```
-
 In addition to the AWS security group configuration which allows TCP ports 80, 442 and 22, update the host firewall to allow inbound connections to map to the container port(s). Assuming we expose port 80, update the firewall configuration.
 
 ```bash

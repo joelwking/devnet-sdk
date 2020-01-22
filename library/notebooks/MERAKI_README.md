@@ -1,7 +1,7 @@
 MERAKI_README.md
 ----------------
 
-Now for the Meraki SDK lab exercises. In our demo environment, Python 3 and the Meraki SDK have been installed in the Docker image.
+Now for the Meraki SDK lab exercises! In our demo environment, Python 3 and the Meraki SDK have been installed in the Docker image.
 
 Refer to the following links for information on learning resources on Cisco DevNet.
 
@@ -10,7 +10,6 @@ Refer to the following links for information on learning resources on Cisco DevN
  - https://developer.cisco.com/meraki/api/#/python/getting-started
 
 Using the Jupyter Notebook, enter and execute these blocks of Python code to examine how to use the Meraki SDK.
-
 
 Import the Meraki SDK (Python library). The API_KEY shown is a read only access into the Meraki demo environment.
 ```python
@@ -35,7 +34,7 @@ for org in orgs:
   if org.get('name') == 'WWT':
       organization_id = org.get('id')
 ```
-Review the help assocated with the Python method
+Review the help assocated with the Python method.
 
 ```python
 help(meraki.organizations)
@@ -91,3 +90,4 @@ This is the end of the Meraki SDK demo. To save your notebook, from your laptop,
 ```bash
 scp -i "~/amazon_web_service/sdk/devnet_sdk_demo.pem" ubuntu@ec2-54-208-198-12.compute-1.amazonaws.com:devnet-sdk/library/notebooks/Using_a_SDK.ipynb ./Using_a_SDK.ipynb
 ```
+If you have entered any credentials in the notebook, be advised they are present in clear text within the file.
