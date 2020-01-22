@@ -49,7 +49,7 @@ The working directory of the container is mapped to the host file system. Verify
 ```bash
 cat Dockerfile
 ```
-Review the contents of the Dockerfile The Docker container has Jupyter installed. 
+Review the contents of the Dockerfile. The Docker container has Jupyter installed. 
 
 ## Start Jupyter notebooks.
 

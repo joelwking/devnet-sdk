@@ -114,4 +114,4 @@ Now you have installed the Docker CE successfully.
 
 ## References
 
-Thanks to the Cisco AI and ML Training Lab Guide Version v1.3.2  OS: Ubuntu 16.04 LTS used as a reference in creating student labs in AWS EC2.
+Thanks to the *Cisco AI and ML Training Lab Guide Version v1.3.2* using OS: Ubuntu 16.04 LTS, as a reference in creating student labs in AWS EC2.
