@@ -1,1 +1,2 @@
 *.ipynb
+!library/notebooks/Using_a_SDK.ipynb
