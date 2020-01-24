@@ -6,6 +6,8 @@ The engineers at World Wide Technology have formed a DevNet study group. This re
 
 This repository provides instructions, a sample Ansible playbook, a Dockerfile, and sample Jupyter notebooks to create a learning environment on using the Meraki SDK. 
 
+![](images/Using_a_SDK.png)
+
 ## Presentation
 
 The companion presentation for this repository is available at [https://www.slideshare.net/joelwking/devnet-study-group-using-a-sdk](https://www.slideshare.net/joelwking/devnet-study-group-using-a-sdk).
