@@ -25,6 +25,8 @@ devnet-sdk/
 ├── AUTHORS
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
+├── images
+│   └── Using_a_SDK.png
 ├── library
 │   └── notebooks
 │       ├── Dockerfile
@@ -37,7 +39,7 @@ devnet-sdk/
 ├── playbooks
 │   ├── install_docker.yml
 │   └── inventory.yml
-├── README.md                      <- You are Here!
+├── README.md                    <- You are Here!
 └── SANDBOX.md
 ```
 
