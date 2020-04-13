@@ -45,7 +45,7 @@ wget https://raw.githubusercontent.com/joelwking/devnet-sdk/master/playbooks/ins
 
 Review and run the playbook.
 ```bash
-./install_docker.yml --private-key=~/amazon_web_service/sdk/devnet_sdk_demo.pem --user ubuntu
+ansible-playbook -i ./inventory.yml ./install_docker.yml --private-key=~/amazon_web_service/sdk/devnet_sdk_demo.pem --user ubuntu
 ```
 
 The output should look similar to the following.
