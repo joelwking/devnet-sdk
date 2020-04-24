@@ -1,0 +1,281 @@
+### Meraki Rate Limiting Exercise
+
+This notebook illustrates how to implement logic to handle failures due to rate limits on the Meraki Cloud.
+For an example code, refer to [*tips to avoid being rate limited*](https://developer.cisco.com/meraki/api/#/rest/guides/rate-limit/tips-to-avoid-being-rate-limited)
+
+In this demonstration we are using the requests module rather than the Meraki SDK. This lab provides a perspective of the benefits of using a SDK rather than managing the APIs directly from your code. 
+
+** Imports **
+
+In addition to importing `json` and `requests`, the `time` module is used to sleep (suspend execution) in the rate limit function.
+
+
+```python
+import time
+import json
+import requests
+import requests.packages.urllib3
+requests.packages.urllib3.disable_warnings()
+```
+
+** Constants **
+
+Define constants to control the program execution. (Feel free to modify these if you wish). Because this lab is attempting to trigger the rate limit logic, the program must issue API calls in a rapid succession to trigger the logic. The goal is to trigger a 429 response code to test our logic.
+
+The nature of the rate limit logic is to recover from the error and be successful on a subsequent execution of the API call. However, there must be some limit or bounds on how many attempt before we give up! 
+
+
+```python
+ITERATIONS = 10                         # Number of API calls to issue to attempt a trigger of the rate limit response
+RL_RETRY = 4                            # Number of attempts to issue the command before assuming the 429 is persistent
+```
+
+** Friendly Names **
+
+Rather than use the integers 429 and 200 in our program, give them human friendly names so the code is more readable. `OK` is defined as a tuple with one value. The reason? There might be other return codes which are acceptable in addition to 200, so create a tuple which can be referenced in the code.
+
+
+```python
+RATE_LIMIT_EXCEEDED = 429
+OK = (200,)
+```
+
+** Headers and URL(s) **
+
+One advantage of the SDK, defining the header values is handled by the SDK! Recall from the SDK example in this repository, the API key needed to be specified. The other header information was formatted for us by the SDK.
+
+We will also define a constant `ORG` which holds a URL that can be used to generate API calls to the Meraki dashboard.
+
+
+```python
+header = {"Content-Type": "application/json"}
+header["X-Cisco-Meraki-API-Key"] = "093b24e85df15a3e66f1fc359f4c48493eaa1b73"
+ORG = "https://dashboard.meraki.com/api/v0/organizations"
+```
+
+** Logic **
+
+Create a method (a function) to implement the logic to address any rate limit issued we may encounter. In Python, you can assign a function to a variable. This logic provides the ability for our program to call the rate_limit logic from various places in the program. This logic enables the rate limit logic to handle `requests.get`, `requests.put`, `requests.post`, etc.
+
+After executing the function held in `api_call`, check if the `status_code` signals we have been rate limited. Check the header value for a hit from the dashboard as to how log to wait, then try the API call again. At some point we want to exit from this logic, `RL_RETRY` keeps the loop from attempting forever.
+
+
+```python
+def rate_limit(api_call, url, **kwargs):
+    
+        for _ in range(RL_RETRY):
+            response = api_call(url, **kwargs)
+            if response.status_code == RATE_LIMIT_EXCEEDED:
+                print(f'{RATE_LIMIT_EXCEEDED} {response.headers["X-Request-Id"]}', end=' ')
+                time.sleep(int(response.headers.get("Retry-After", 1)))
+            else:
+                return response
+        return response
+```
+
+** Issue a GET  **
+
+The method `api_get` provides a means to handle other errors which might be encountered. For example, what happens if we change the URL to a host which doesn't exist? For example:
+```
+ORG = "https://dashboard.example.net/api/v0/organizations"
+```
+Try it and see for yourself! Note that when we call the `rate_limit` method, the first argument is the function `requests.get`.
+
+
+```python
+def api_get(uri):
+    try:
+        r = rate_limit(requests.get, uri, headers=header, verify=False)
+    except requests.ConnectionError as e:
+        print(f'ConnectionError: {e}')
+        return False
+    return r
+
+```
+
+** Test Rate Limiting **
+
+At this point, attemt to trigger the rate limiting logic of the Meraki dashboard. Create a loop, using `ITERATIONS` defined previously, and return the organizations associated with this API key. Triggering the 429 rate limiting errors may require running hundreds of iterations. The function `api_get` returns the requests object, which means we can print out the status code and headers resulting from the request.
+
+
+```python
+for i in range(ITERATIONS):
+    r = api_get(ORG)
+    if r:
+        print(f'{i}|{r.status_code} {r.headers["Date"]} {r.headers["X-Request-Id"]}')
+print('Finished!')
+```
+
+    0|200 Fri, 24 Apr 2020 17:00:04 GMT 9ee121ab3aa8dba96ebe55c41404e723
+    1|200 Fri, 24 Apr 2020 17:00:05 GMT 2d21363e28e06ff123c094d627951708
+    2|200 Fri, 24 Apr 2020 17:00:06 GMT 90d0324a0b146f173645c8670467875f
+    3|200 Fri, 24 Apr 2020 17:00:07 GMT e6e35f8bdde3ee45a12912ffb9726eaf
+    4|200 Fri, 24 Apr 2020 17:00:08 GMT a030fe0768c1273d831fc26a1c1c3f98
+    5|200 Fri, 24 Apr 2020 17:00:09 GMT e1f6a33a4d2c2a6960b8570c544bfce3
+    6|200 Fri, 24 Apr 2020 17:00:10 GMT e8658c73ef91a5523ece89306818344a
+    7|200 Fri, 24 Apr 2020 17:00:11 GMT c40f1094d782de1bd0de2de6706aac25
+    8|200 Fri, 24 Apr 2020 17:00:12 GMT d7578249ac2a7382ed3f7c642cb3c93a
+    9|200 Fri, 24 Apr 2020 17:00:13 GMT 59db02d5b63dd2d8abbbde262d909a50
+    Finished!
+
+
+After the loop is finished, you can examine the contents of the *last* returned requests object. The `headers` variable is a dictionary. We referenced some fields previously, now examine all the key, value pairs stored in `headers`.
+
+
+```python
+r.headers
+```
+
+
+
+
+    {'Server': 'nginx', 'Date': 'Fri, 24 Apr 2020 17:00:13 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Vary': 'Accept-Encoding', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': 'Fri, 01 Jan 1990 00:00:00 GMT', 'X-Frame-Options': 'sameorigin', 'X-Robots-Tag': 'none', 'X-UA-Compatible': 'IE=Edge,chrome=1', 'X-Request-Id': '59db02d5b63dd2d8abbbde262d909a50', 'X-Runtime': '0.130718', 'X-XSS-Protection': '1; mode=block', 'Content-Encoding': 'gzip'}
+
+
+
+Similarly, examine the data returned from the API call, in this case, the organizations associated with the provide API key.
+
+
+```python
+r.json()
+```
+
+
+
+
+    [{'id': '537758',
+      'name': 'Meraki Launchpad🚀',
+      'url': 'https://n149.meraki.com/o/d029Cc/manage/organization/overview',
+      'samlConsumerUrl': 'https://n149.meraki.com/saml/login/d029Cc/rtFn7bJtIRna',
+      'samlConsumerUrls': ['https://n149.meraki.com/saml/login/d029Cc/rtFn7bJtIRna']},
+     {'id': '549236',
+      'name': 'DevNet Sandbox',
+      'url': 'https://n149.meraki.com/o/-t35Mb/manage/organization/overview'}]
+
+
+
+Reference the list of organizations and print out the `id` and `name`.
+
+
+```python
+for organization in r.json():
+    print(organization['id'], organization['name'])
+```
+
+    537758 Meraki Launchpad🚀
+    549236 DevNet Sandbox
+
+
+** Get Networks **
+
+For the next example, our code needs to know what networks are associated with one of the organizations. Issue the API call to get networks for the specified organization, (in this case, 549236), and print out the `id` and network `name`.
+
+
+```python
+r = api_get('https://dashboard.meraki.com/api/v0/organizations/549236/networks')
+for network in r.json():
+    print(f'{network["id"]} {network["name"]}')
+
+```
+
+    L_646829496481104079 DevNet Sandbox Always on READ ONLY
+    L_646829496481105049 DNENT2-dxxxzglobal.ntt
+    L_646829496481105064 DNSMB5-Pxxxxxxxrsws.de
+    L_646829496481105073 DNSMB3-bxxxxxxtsws.de
+    L_646829496481105079 DNSMB2-Mxxxxrsws.de
+    L_646829496481105081 DNENT3-pxxxxxxoudla.edu.ec
+    L_646829496481105090 DNENT1-txxxxocisco.com
+    L_646829496481105097 DNSMB1-cxxxxhoutlook.com
+    L_646829496481105098 DNSMB4-dxxxxxxxacisco.com
+
+
+** Issue a POST **
+
+Create a new function to post data to the dashboard. The HTTP POST is commonly used to send some amount of data to the dashboard to update the charactistics of, in this case, a network configuration. This fuction is similar to the `api_get`, with the difference being we have added an additional argument, the `body` variable. The data we intent to send is stored in the `body`.
+
+
+```python
+def api_post(uri, body={}):
+    try:
+        r = rate_limit(requests.post, uri, data=body, headers=header, verify=False)
+    except requests.ConnectionError as e:
+        print(f'ConnectionError: {e}')
+        return False
+    return r
+```
+
+Now invoke the function `api_post`, using one of the network `id` from above in the URL and specify a configuration template in the `body`.
+
+
+```python
+r = api_post(f'https://dashboard.meraki.com/api/v0/networks/{network["id"]}/bind', body='{"configTemplateId": "N_23952905"}')
+```
+
+Examine the result. Why did the POST request fail? Examine the `status_code` and returned `text` field.
+
+
+```python
+print(r.status_code, r.text)
+```
+
+    400 {"errors":["Template cannot be found"]}
+
+
+The request failed due to an incorrect template ID. Note the `rate_limit` logic passed the return code *400* back to the calling function. Now, generate another error. This time change the hostname to `example.net`. This host doesn't exist, where will this error be caught in the logic?
+
+
+```python
+r = api_post(f'https://dashboard.example.net/api/v0/networks/{network["id"]}/bind', body='{"configTemplateId": "N_23952905"}')
+```
+
+    ConnectionError: HTTPSConnectionPool(host='dashboard.example.net', port=443): Max retries exceeded with url: /api/v0/networks/L_646829496481105098/bind (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f72805f38d0>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+
+
+The `ConnectionError` message was generated by the try/except block in the `api_post` function. Examine the value of variable `r`.
+
+
+```python
+print(r)
+```
+
+    False
+
+
+Note that the variable `r` has a value of False, a boolean, and `r.status_code` does not exist. The program cannot populate the variable of `r` with a status code because none exists, we were unsuccessful in connecting to the target host, no status code exists. Our program logic returns False in this case. Note that in our looping logic, we check to see `if r` is true before printing the contents of the object.
+
+** Learning Aids **
+
+Study the [List of HTTP Status Codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) paying particular attention to:
+```
+2xx Success
+200 OK
+201 Created
+202 Accepted
+
+3xx Redirection
+301 Moved Permanently
+
+4xx Client errors
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+429 Too Many Requests
+```
+Many of these common status codes can be observed in this program example. Also familiarize yourself with the definition and usage of the [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods).
+
+```
+GET requests a representation of the specified resource, retrieves data
+POST submit an entity to the specified resource, often causing a change in state or side effects on the server
+PUT replaces all current representations of the target resource with the request payload
+DELETE deletes the specified resource
+PATCH  apply partial modifications to a resource
+```
+
+** Summary **
+
+Hopefully this exercise provides a perspective of how a programming must consider and address connection and status error messages when using the Meraki dashboard API directly rather than allowing the SDK to handle these issues. This exercise also introduced the concept of passing functions in variables between different parts of your Python program. It also examines how to incorporate sample logic from the *tips to avoid being rate limited* article and create a more robust solution in your code.
+
+** Author **
+
+Joel W. King (GitHub / GitLab @joelwking)

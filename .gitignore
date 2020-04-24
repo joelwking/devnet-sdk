@@ -1,2 +1,3 @@
 *.ipynb
 !library/notebooks/Using_a_SDK.ipynb
+!library/notebooks/Meraki_Rate_Limiting_example.ipynb
