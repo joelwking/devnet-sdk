@@ -18,7 +18,7 @@ In the root directory, `SANDBOX.md`  provides instructions on creating an AWS EC
 
 In the `library/notebooks` directory, `README.md` provides instructions on how to install and run the Docker image specified in `library/notebooks/Dockerfile`. The running container is used to execute an instance of **Jupyter notebooks**.  Within the container, Python 3, the Meraki SDK, a sample notebook (`library/notebooks/Using_a_SDK.ipynb`) and Python program (`library/notebooks/using_meraki_sdk.py`) are referenced in the lab guide `library/notebooks/MERAKI_README.md`.
 
-Additionally, content has been added to include a notebook which walks the student through implementing rate limiting logic to address any *429* errors. See the documentation and sample notebook under `library/notebooks/Meraki_Rate_Limiting_example`.
+Additionally, content has been added to include a notebook which walks the student through implementing rate limiting logic to address any *429* errors. Refer to the notebook under `library/notebooks/Meraki_Rate_Limiting_example.ipynb`.
 
 ### Directory Tree
 
