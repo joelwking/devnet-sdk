@@ -1,3 +1,5 @@
 *.ipynb
 !library/notebooks/Using_a_SDK.ipynb
 !library/notebooks/Meraki_Rate_Limiting_example.ipynb
+!library/notebooks/DEVASC_API.ipynb
+!library/notebooks/DEVASC_Authentication.ipynb
