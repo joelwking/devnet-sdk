@@ -44,7 +44,7 @@ def main():
             return "ECHO: POST:\n"
 
         elif request.method == 'GET':
-            return "ECHO: PATCH\n"
+            return "ECHO: GET\n"
         elif request.method == 'PATCH':
             return "ECHO: PATCH\n"
         elif request.method == 'PUT':
