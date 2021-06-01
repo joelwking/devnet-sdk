@@ -1,0 +1,8 @@
+#
+#  requirements.txt
+#
+# meraki-sdk   deprecated
+meraki
+requests
+pyyaml
+jupyter
