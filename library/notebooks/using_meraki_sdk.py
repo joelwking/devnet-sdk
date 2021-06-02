@@ -3,7 +3,7 @@
 
     using_meraki_sdk.py
 
-    Copyright (c) 2020 World Wide Technology, LLC
+    Copyright (c) 2021 World Wide Technology
     All rights reserved.
 
     author: joel.king@wwt.com (@joelwking)
@@ -11,6 +11,7 @@
     usage:
             export MERAKI_KEY=12345678901234567890
             export MERAKI_ORG=WWT
+            export MERAKI_DEBUG=yes
             python3 ./using_meraki_sdk.py
 
 """
@@ -24,6 +25,7 @@ from meraki_sdk.exceptions.api_exception import APIException
 
 KEYNAME = 'MERAKI_KEY'
 ORGNAME = 'MERAKI_ORG'
+DEBUG = 'MERAKI_DEBUG'
 
 def get_devices(dashboard=None, organization_id=None):
     """
@@ -41,6 +43,10 @@ def get_org_id(dashboard=None, org_name=None):
         return either the organization ID or None
     """
     orgs = []
+    debug = os.environ.get(DEBUG)
+
+    if debug:
+        print(f'DEBUG: INPUT:{org_name}')
 
     if org_name:
         try:
@@ -50,6 +56,8 @@ def get_org_id(dashboard=None, org_name=None):
             sys.exit()
 
     for org in orgs:
+        if debug:
+            print(f'DEBUG: ORG:{org.get("name")}')
         if org_name == org.get('name'):
             return org.get('id')
     
