@@ -10,12 +10,23 @@ This repository provides instructions, a sample Ansible playbook, a Dockerfile, 
 The companion presentation for this repository is available at [https://www.slideshare.net/joelwking/devnet-study-group-using-a-sdk](https://www.slideshare.net/joelwking/devnet-study-group-using-a-sdk).
 
 ## Demo environment
-The examples can be executed using a cloud instance like AWS EC2, or by using VS CODE and a Dev Container.
+The examples can be executed using a cloud instance (like AWS EC2), or by using VS CODE and a Dev Container.
 
 ### Dev Container
-The preferred method is to use VS Code and a Dev Container. When using this method, clone this repository to your local machine. Use these steps https://gitlab.com/joelwking/vs_code_remote_container#vs_code_remote_container and install the required software and the remote container extension.
+The preferred method is to use VS Code and a Dev Container. When using this method, clone this repository to your local machine. Use these steps and install the required software and the remote container extension.
 
-Then in VS Code, issue a `File -> Open Workspace`, and select the `workspace.code-workspace` in this directory and follow the prompts to build the Docker image and container. Once complete, you can open a terminal window and run `jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root` to start the notebook service. View the port mapping configuration and substitute the host port assigned to the port `8888`. 
+* Docker Desktop. Download and install Docker Desktop for your target development environment, https://www.docker.com/products/docker-desktop
+* Visual Studio Code, [Download and install it](https://code.visualstudio.com/download) and the [Visual Studio Code Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack).
+
+Select the 'Extensions' sidebar menu item and enter `remote` in the Search Extensions in Marketplace dialog box and install this extension (ms-vscode-remote.remote-containers).
+
+You can also locate and install the [Visual Studio Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) from the web link.
+
+> Note: You may need to restart VS code after installing the Extension Pack for the extension to be recognized.
+
+From VS Code, issue a `File -> Open Workspace`, and select the `workspace.code-workspace` in this directory and follow the prompts to build the Docker image and container. Once complete, you can open a terminal window and run `jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root` to start the notebook service. Copy the URL specified in the standard output from the `jupyter notebook` command. Substitute the host port mapped for port `8888`. 
+
+Using a web browser, paste the specified URL and open the notebook you wish to examine.
 
 ### Cloud Instance
 In the root directory, `SANDBOX.md`  provides instructions on creating an AWS EC2 instance and installing Docker CE, either manually or using the Ansible playbook `playbooks/install_docker.yml`.
