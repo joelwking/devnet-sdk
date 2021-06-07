@@ -9,7 +9,7 @@
 #       https://github.com/wwt/network-endpoint-mapper
 #
 FROM python:3.8.10-slim-buster
-ENV VIRTUAL_ENV=/opt/juypter
+ENV VIRTUAL_ENV=/opt/jupyter
 LABEL maintainer="Joel W. King" email="joel.king@wwt.com"
 RUN apt update && \
     apt -y install git && \
@@ -25,5 +25,6 @@ COPY . /src
 WORKDIR /src
 RUN pip install -r requirements.txt
 #
+#  source /opt/jupyter/bin/activate
 #  jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root
 #
