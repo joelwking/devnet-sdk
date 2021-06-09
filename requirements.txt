@@ -1,0 +1,11 @@
+#
+#  requirements.txt
+#
+# This SDK is being deprecated ...
+meraki-sdk
+# ... in favor of the library maintained at https://github.com/meraki/dashboard-api-python/
+meraki
+#
+requests
+pyyaml
+jupyter
