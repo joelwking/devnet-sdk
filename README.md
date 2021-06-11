@@ -18,6 +18,8 @@ A companion presentation (initially developed using the cloud instance) for SDK/
 
 The presentation developed for the _Introduction to Python_ using the Dev Container is available at [https://www.slideshare.net/joelwking/devnet-associate-python-introduction](https://www.slideshare.net/joelwking/devnet-associate-python-introduction).
 
+Jupyter Notebook Tutorial: [https://www.dataquest.io/blog/jupyter-notebook-tutorial/](ttps://www.dataquest.io/blog/jupyter-notebook-tutorial/)
+
 Dev Container
 -------------
 Using the Dev Container eliminates the need to configure and pay for cloud compute resources. Additionally, is is much simplier to get the server up and running quickly. 
@@ -35,9 +37,23 @@ You can also locate and install the [Visual Studio Code Remote - Containers](htt
 
 > Note: You may need to restart VS code after installing the Extension Pack for the extension to be recognized.
 
-From VS Code, issue a `File -> Open Workspace`, and select the `workspace.code-workspace` in this directory and follow the prompts to build the Docker image and container. Once complete, you can open a terminal window, enable the Python virtual environment, `source /opt/jupyter/bin/activate`. Run `jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root` to start the notebook service. Copy the URL specified in the standard output from the `jupyter notebook` command. Substitute the host port mapped for port `8888`. 
+From VS Code, issue a `File -> Open Workspace`, and select the `workspace.code-workspace` in this directory and follow the prompts to build the Docker image and container. Once complete, open a terminal window. You should see a prompt similar to:
+
+```shell
+root@d2644c744933:/workspaces/devnet-sdk#
+```
+
+Enable the Python virtual environment and start the notebook service in that environment:
+
+```shell
+ source /opt/jupyter/bin/activate && jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root
+```
+
+Copy the URL specified in the standard output from the `jupyter notebook` command. Substitute the host port mapped for port `8888`. 
 
 Using a web browser, paste the specified URL, using the host port assigned and open the notebook file(s) of interest.
+
+
 
 Cloud Instance
 --------------
