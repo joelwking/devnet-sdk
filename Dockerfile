@@ -25,6 +25,5 @@ COPY . /src
 WORKDIR /src
 RUN pip install -r requirements.txt
 #
-#  source /opt/jupyter/bin/activate
-#  jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root
+#  source /opt/jupyter/bin/activate && jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root
 #

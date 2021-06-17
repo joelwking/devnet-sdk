@@ -37,7 +37,30 @@ You can also locate and install the [Visual Studio Code Remote - Containers](htt
 
 > Note: You may need to restart VS code after installing the Extension Pack for the extension to be recognized.
 
-From VS Code, issue a `File -> Open Workspace`, and select the `workspace.code-workspace` in this directory and follow the prompts to build the Docker image and container. Once complete, open a terminal window. You should see a prompt similar to:
+From VS Code, issue a `File -> Open Workspace`, and select the `workspace.code-workspace` in this directory and follow the prompts to build the Docker image and container.
+
+When you see the window "Starting Dev Container (show log):", click on the link to open the terminal prompt.
+
+The `.devcontainer/devcontainer.json` configuration file will start the server after the container is built. You will see the notebook start and display the URL (with access token) to access the web interface. Click on the `PORTS` window tab, verify the **Local Address** and substitute the host port for the port 8888 specified in the URL if necessary, and launch the notebook using a web browser on your laptop.
+
+```
+I 13:38:29.294 NotebookApp] Serving notebooks from local directory: /workspaces/devnet-sdk
+[I 13:38:29.294 NotebookApp] Jupyter Notebook 6.4.0 is running at:
+[I 13:38:29.295 NotebookApp] http://21d5ed265e0f:8888/?token=e6ca46bd2dca2d3bb4984161b68d68a282b8c400c0d3819f
+[I 13:38:29.295 NotebookApp]  or http://127.0.0.1:8888/?token=e6ca46bd2dca2d3bb4984161b68d68a282b8c400c0d3819f
+[I 13:38:29.296 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[W 13:38:29.308 NotebookApp] No web browser found: could not locate runnable browser.
+[C 13:38:29.309 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///root/.local/share/jupyter/runtime/nbserver-175-open.html
+    Or copy and paste one of these URLs:
+        http://21d5ed265e0f:8888/?token=e6ca46bd2dca2d3bb4984161b68d68a282b8c400c0d3819f
+     or http://127.0.0.1:8888/?token=e6ca46bd2dca2d3bb4984161b68d68a282b8c400c0d3819f
+
+```
+
+If you stop the running server, you can restart by pening a terminal window. You should see a prompt similar to:
 
 ```shell
 root@d2644c744933:/workspaces/devnet-sdk#
@@ -48,12 +71,9 @@ Enable the Python virtual environment and start the notebook service in that env
 ```shell
  source /opt/jupyter/bin/activate && jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root
 ```
+or by executing the shell script `./start_jupyter.sh`.
 
-Copy the URL specified in the standard output from the `jupyter notebook` command. Substitute the host port mapped for port `8888`. 
-
-Using a web browser, paste the specified URL, using the host port assigned and open the notebook file(s) of interest.
-
-
+Select the notebook files you wish to examine.
 
 Cloud Instance
 --------------
