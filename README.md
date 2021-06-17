@@ -16,9 +16,9 @@ Presentations
 -------------
 A companion presentation (initially developed using the cloud instance) for SDK/APIs is available at [https://www.slideshare.net/joelwking/devnet-study-group-using-a-sdk](https://www.slideshare.net/joelwking/devnet-study-group-using-a-sdk).
 
-The presentation developed for the _Introduction to Python_ using the Dev Container is available at [https://www.slideshare.net/joelwking/devnet-associate-python-introduction](https://www.slideshare.net/joelwking/devnet-associate-python-introduction).
+The presentation developed for the _Introduction to Python_ using the Dev Container is available at [https://www.slideshare.net/joelwking/devnet-associate-python-introduction-249397611](https://www.slideshare.net/joelwking/devnet-associate-python-introduction-249397611).
 
-Jupyter Notebook Tutorial: [https://www.dataquest.io/blog/jupyter-notebook-tutorial/](ttps://www.dataquest.io/blog/jupyter-notebook-tutorial/)
+Jupyter Notebook Tutorial: [https://www.dataquest.io/blog/jupyter-notebook-tutorial/](https://www.dataquest.io/blog/jupyter-notebook-tutorial/).
 
 Dev Container
 -------------
