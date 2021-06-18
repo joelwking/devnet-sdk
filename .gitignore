@@ -6,3 +6,8 @@
 !library/notebooks/Cisco_Product_Authentication_*.ipynb
 !library/notebooks/YANG_NETCONF_RESTCONF.ipynb
 !library/notebooks/Introduction_to_Python.ipynb
+#
+# Ignore environment variable for the VS Code debugger
+#
+.env/*
+!.env/README.md
