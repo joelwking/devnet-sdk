@@ -1,6 +1,10 @@
 
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.177.0/containers/docker-from-docker
+//
+// Syntax Documentation
+//    https://code.visualstudio.com/docs/remote/devcontainerjson-reference
+//
 {
 	"name": "Jupyter in Python venv",
 	"dockerFile": "../Dockerfile",
@@ -26,7 +30,10 @@
         "forwardPorts": [8888],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "/workspaces/devnet-sdk/start_jupyter.sh",
+	// "postCreateCommand": "/workspaces/devnet-sdk/start_jupyter.sh"
+
+	// Use 'postStartCommand' to run commands after the container is started.
+    "postStartCommand": "/workspaces/devnet-sdk/start_jupyter.sh"
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	// "remoteUser": "vscode"
