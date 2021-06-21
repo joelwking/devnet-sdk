@@ -30,13 +30,13 @@
     "forwardPorts": [8888],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "/bin/echo Hello from your new container"
+    "postCreateCommand": "/bin/echo Hello from your new container"
 
 	// Use 'postStartCommand' to run commands after the container is started.
     "postStartCommand": "/bin/echo Welcome"
 
 	// Use 'postAttachCommand' to run when attaching to the container.
-	"postAttachCommand": ["/workspaces/devnet-sdk/start_jupyter.sh"]
+    "postAttachCommand": ["/workspaces/devnet-sdk/start_jupyter.sh"]
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	// "remoteUser": "vscode"
