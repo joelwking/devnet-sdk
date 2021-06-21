@@ -30,10 +30,10 @@
     "forwardPorts": [8888],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "/workspaces/devnet-sdk/start_jupyter.sh"
+	"postCreateCommand": "/bin/echo Hello from your new container"
 
 	// Use 'postStartCommand' to run commands after the container is started.
-    // "postStartCommand": "/workspaces/devnet-sdk/start_jupyter.sh"
+    "postStartCommand": "/bin/echo Welcome"
 
 	// Use 'postAttachCommand' to run when attaching to the container.
 	"postAttachCommand": ["/workspaces/devnet-sdk/start_jupyter.sh"]
