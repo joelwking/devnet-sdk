@@ -7,7 +7,7 @@
     All rights reserved.
 
     author: joel.king@wwt.com (@joelwking)
-    
+
     usage:
             export MERAKI_KEY=12345678901234567890
             export MERAKI_ORG=WWT
