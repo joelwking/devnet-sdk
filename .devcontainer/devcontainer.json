@@ -39,7 +39,7 @@
 	"postStartCommand": "/bin/echo Welcome",
 
 	// Use 'postAttachCommand' to run when attaching to the container.
-	"postAttachCommand": ["/workspaces/devnet-sdk/start_jupyter.sh"]
+	"postAttachCommand": "/bin/bash /workspaces/devnet-sdk/start_jupyter.sh"
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	// "remoteUser": "vscode"
