@@ -60,7 +60,7 @@ I 13:38:29.294 NotebookApp] Serving notebooks from local directory: /workspaces/
 
 ```
 
-If you stop the running server, you can restart by pening a terminal window. You should see a prompt similar to:
+If you stop the running server, you can restart by opening a terminal window. You should see a prompt similar to:
 
 ```shell
 root@d2644c744933:/workspaces/devnet-sdk#
@@ -71,7 +71,7 @@ Enable the Python virtual environment and start the notebook service in that env
 ```shell
  source /opt/jupyter/bin/activate && jupyter notebook --port=8888 --ip=0.0.0.0 --allow-root
 ```
-or by executing the shell script `./start_jupyter.sh`.
+or by executing the shell script `source ./start_jupyter.sh`.
 
 Select the notebook files you wish to examine.
 
